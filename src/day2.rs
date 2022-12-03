@@ -1,91 +1,44 @@
 #![allow(dead_code)]
 
-use std::fs::read_to_string;
-use num_enum::{ TryFromPrimitive, IntoPrimitive };
+use std::{fs::read_to_string};
+use crate::utils;
 
-#[derive(PartialEq, Clone, Copy, TryFromPrimitive, IntoPrimitive)]
-#[repr(i32)]
-enum Choice {
-    ROCK = 0,
-    PAPER = 1,
-    SCISSORS = 2,
-}
-
-enum Result {
-    LOSE,
-    DRAW,
-    WIN,
-}
-
-fn score(pair: &(Choice, Choice)) -> i32 {
-    let match_point = match pair {
-        (a, b) if a == b => 3,
-        | (Choice::ROCK, Choice::PAPER)
-        | (Choice::PAPER, Choice::SCISSORS)
-        | (Choice::SCISSORS, Choice::ROCK) => 6,
-        (_, _) => 0,
-    };
-    let choice_point: i32 = pair.1.into();
-    return match_point + choice_point + 1;
-}
-
-fn loses(choice: Choice) -> Choice {
-    let num: i32 = choice.into();
-    return Choice::try_from((num + 2) % 3).expect("Could not convert");
-}
-
-fn beats(choice: Choice) -> Choice {
-    let num: i32 = choice.into();
-    return Choice::try_from((num + 1) % 3).expect("Could not convert");
-}
-
-fn get_play(tuple: &(Choice, Result)) -> (Choice, Choice) {
-    match *tuple {
-        (a, Result::DRAW) => (a, a),
-        (a, Result::WIN) => (a, beats(a)),
-        (a, Result::LOSE) => (a, loses(a)),
-    }
-}
-
-fn get_choice(string: &str) -> Choice {
-    match string {
-        "A" | "X" => Choice::ROCK,
-        "B" | "Y" => Choice::PAPER,
-        "C" | "Z" => Choice::SCISSORS,
-        &_ => panic!("Invalid value"),
-    }
-}
-
-fn get_result(string: &str) -> Result {
-    match string {
-        "X" => Result::LOSE,
-        "Y" => Result::DRAW,
-        "Z" => Result::WIN,
-        &_ => panic!("Invalid value"),
-    }
-}
-
-fn parse_string(string: &str) -> (Choice, Choice) {
-    let splt: Vec<&str> = string.split(" ").collect();
-    return (get_choice(splt[0]), get_choice(splt[1]));
-}
-
-fn parse_result(string: &str) -> (Choice, Result) {
-    let splt: Vec<&str> = string.split(" ").collect();
-    return (get_choice(splt[0]), get_result(splt[1]));
-}
-
+// Rock = 1, Paper = 2, Scissors = 3
+// Loss = 0, Draw = 1, Loss = 2
+// (me - you) % 3 = result
+// (1 + me - you) % 3 => 0 for loss, 1 for draw, 2 for win
+// * 3 => 0 loss, 3 draw, 6 win
 fn part_a(filename: &str) -> i32 {
-    let contents = read_to_string(filename).expect("Could not read file");
-    let input: Vec<(Choice, Choice)> = contents.lines().map(parse_string).collect();
-    input.iter().map(score).sum()
+    let mut contents = read_to_string(filename).expect("Could not read file");
+    contents = utils::replace_all(contents, vec!["A", "X"], "1");
+    contents = utils::replace_all(contents, vec!["B", "Y"], "2");
+    contents = utils::replace_all(contents, vec!["C", "Z"], "3");
+
+    let input: Vec<i32> = contents.lines().map(|x: &str| {
+        let parts: Vec<i32> = x.split(" ").map(utils::str_to_int).collect();
+        parts[1] + (((4 + parts[1] - parts[0]) % 3) * 3) // add 4 instead of 1 as % is technically remainder
+    }).collect();
+    input.iter().sum()
 }
 
+// Rock = 1, Paper = 2, Scissors = 3
+// Loss = 1, Draw = 2, Win = 3 (result)
+// (1 + me - you) = (result - 1) (% 3)
+// me = (1 + result + you) % 3
+// score = (result - 1) * 3
 fn part_b(filename: &str) -> i32 {
-    let contents = read_to_string(filename).expect("Could not read file");
-    let input: Vec<(Choice, Result)> = contents.lines().map(parse_result).collect();
-    let plays: Vec<(Choice, Choice)> = input.iter().map(get_play).collect();
-    plays.iter().map(score).sum()
+    let mut contents = read_to_string(filename).expect("Could not read file");
+    contents = utils::replace_all(contents, vec!["A", "X"], "1");
+    contents = utils::replace_all(contents, vec!["B", "Y"], "2");
+    contents = utils::replace_all(contents, vec!["C", "Z"], "3");
+
+    let input: Vec<i32> = contents.lines().map(|x: &str| {
+        let parts: Vec<i32> = x.split(" ").map(utils::str_to_int).collect();
+        let my_score = 1 + (parts[1] + parts[0]) % 3;
+        let score = (parts[1] - 1) * 3;
+        my_score + score
+    }).collect();
+    input.iter().sum()
 }
 
 pub fn test() {
