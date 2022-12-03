@@ -1,17 +1,16 @@
-use crate::utils;
+use std::fs::read_to_string;
 
 fn parse_input(filename: &str) -> Vec<i32> {
+    let file_content = read_to_string(filename).expect("Could not read file");
+    let lines: Vec<&str> = file_content.lines().collect();
+
     let mut elves = vec![0];
-    if let Ok(lines) = utils::read_lines(filename) {
-        for line in lines {
-            if let Ok(content) = line {
-                if content == "" {
-                    elves.push(0);
-                } else {
-                    let end = elves.len() - 1;
-                    elves[end] += content.parse::<i32>().unwrap();
-                }
-            }
+    for line in lines {
+        if line == "" {
+            elves.push(0);
+        } else {
+            let end = elves.len() - 1;
+            elves[end] += line.parse::<i32>().unwrap();
         }
     }
     return elves;
