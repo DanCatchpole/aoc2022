@@ -1,6 +1,7 @@
 mod day1;
+mod day2;
 
 fn main() {
-    day1::test();
-    day1::exec();
+    day2::test();
+    day2::exec();
 }

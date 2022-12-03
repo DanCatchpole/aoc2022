@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use std::fs::read_to_string;
 
 fn parse_input(filename: &str) -> Vec<i32> {
