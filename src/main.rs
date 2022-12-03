@@ -1,8 +1,7 @@
 mod utils;
-mod day1;
-mod day2;
+mod day3;
 
 fn main() {
-    day2::test();
-    day2::exec();
+    day3::test();
+    day3::exec();
 }

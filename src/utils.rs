@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 pub fn replace_all(mut source: String, occurences: Vec<&str>, replace_with: &str) -> String {
     for occur in occurences {
         source = source.replace(occur, replace_with);
