@@ -56,15 +56,16 @@ pub fn exec() {
     println!("Part B: {}", part_b(filename));
 }
 
-pub fn test() {
+#[test]
+fn test() {
     let filename = "test/day3.txt";
-    assert!(char_to_priority('A') == 27);
+    assert_eq!(char_to_priority('A'), 27);
 
     let part_a_sol = part_a(filename);
-    assert!(part_a_sol == 157, "Expected 157, Got {}", part_a_sol);
+    assert_eq!(part_a_sol, 157);
 
     let part_b_sol = part_b(filename);
-    assert!(part_b_sol == 70, "Expected 70, Got {}", part_b_sol);
+    assert_eq!(part_b_sol, 70);
 
     println!("Test passed");
 }

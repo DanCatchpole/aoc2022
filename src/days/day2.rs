@@ -41,6 +41,7 @@ fn part_b(filename: &str) -> i32 {
     input.iter().sum()
 }
 
+#[test]
 pub fn test() {
     let filename = "./test/day2.txt";
     let result_a = part_a(filename);

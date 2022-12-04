@@ -1,7 +1,11 @@
+use std::env;
+
 mod utils;
-mod day3;
+mod days;
 
 fn main() {
-    day3::test();
-    day3::exec();
+    let args: Vec<String> = env::args().collect();
+    let day = args[1].parse::<i32>().expect("Need to enter a day number");
+    println!("Running day {}", day);
+    days::run_day(day);
 }

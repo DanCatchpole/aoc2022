@@ -29,6 +29,7 @@ fn part_b(mut elves: Vec<i32>) -> i32 {
     return elves[0] + elves[1] + elves[2];
 }
 
+#[test]
 pub fn test() {
     let elves = parse_input("./test/day1.txt");
     assert!(part_a(elves.clone()) == 24000);
