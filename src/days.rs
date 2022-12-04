@@ -6,7 +6,7 @@ pub mod day3;
 pub mod day4;
 
 pub fn run_day(day: i32) {
-    println!("Running day {}", day);
+    println!("Day {}", day);
     let now = Instant::now();
     match day {
         1 => day1::exec(),
@@ -15,7 +15,7 @@ pub fn run_day(day: i32) {
         4 => day4::exec(),
         _ => println!("No such day")
     }
-    println!("Executed in {}ms", (now.elapsed().as_millis()));
+    println!(" - Executed in {}ms", (now.elapsed().as_millis()));
 }
 
 pub fn run_all() {

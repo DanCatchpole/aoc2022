@@ -48,6 +48,5 @@ mod tests {
 
 pub fn exec() {
     let elves = parse_input("./input/day1.txt");
-    println!("Part A: {}", part_a(elves.clone()));
-    println!("Part B: {}", part_b(elves.clone()));
+    crate::utils::output_results(part_a(elves.clone()), part_b(elves.clone()));
 }

@@ -49,8 +49,7 @@ fn part_b(filename: &str) -> i32 {
 
 pub fn exec() {
     let filename = "input/day4.txt";
-    println!("Part A: {}", part_a(filename));
-    println!("Part B: {}", part_b(filename));
+    crate::utils::output_results(part_a(filename), part_b(filename));
 }
 
 #[cfg(test)]
