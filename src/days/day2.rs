@@ -1,6 +1,4 @@
-#![allow(dead_code)]
-
-use std::{fs::read_to_string};
+use std::fs::read_to_string;
 use crate::utils;
 
 // Rock = 1, Paper = 2, Scissors = 3
@@ -14,10 +12,13 @@ fn part_a(filename: &str) -> i32 {
     contents = utils::replace_all(contents, vec!["B", "Y"], "2");
     contents = utils::replace_all(contents, vec!["C", "Z"], "3");
 
-    let input: Vec<i32> = contents.lines().map(|x: &str| {
-        let parts: Vec<i32> = x.split(" ").map(utils::str_to_int).collect();
-        parts[1] + (((4 + parts[1] - parts[0]) % 3) * 3) // add 4 instead of 1 as % is technically remainder
-    }).collect();
+    let input: Vec<i32> = contents
+        .lines()
+        .map(|x: &str| {
+            let parts: Vec<i32> = x.split(" ").map(utils::str_to_int).collect();
+            parts[1] + ((4 + parts[1] - parts[0]) % 3) * 3 // add 4 instead of 1 as % is technically remainder
+        })
+        .collect();
     input.iter().sum()
 }
 
@@ -32,23 +33,32 @@ fn part_b(filename: &str) -> i32 {
     contents = utils::replace_all(contents, vec!["B", "Y"], "2");
     contents = utils::replace_all(contents, vec!["C", "Z"], "3");
 
-    let input: Vec<i32> = contents.lines().map(|x: &str| {
-        let parts: Vec<i32> = x.split(" ").map(utils::str_to_int).collect();
-        let my_score = 1 + (parts[1] + parts[0]) % 3;
-        let score = (parts[1] - 1) * 3;
-        my_score + score
-    }).collect();
+    let input: Vec<i32> = contents
+        .lines()
+        .map(|x: &str| {
+            let parts: Vec<i32> = x.split(" ").map(utils::str_to_int).collect();
+            let my_score = 1 + ((parts[1] + parts[0]) % 3);
+            let score = (parts[1] - 1) * 3;
+            my_score + score
+        })
+        .collect();
     input.iter().sum()
 }
 
-#[test]
-pub fn test() {
-    let filename = "./test/day2.txt";
-    let result_a = part_a(filename);
-    let result_b = part_b(filename);
-    assert!(result_a == 15, "Expected 15, Got {}", result_a);
-    assert!(result_b == 12, "Expected 12, Got {}", result_b);
-    println!("Test passed");
+#[cfg(test)]
+mod tests {
+    use super::*;
+    static TEST_FILE_NAME: &str = "test/day2.txt";
+
+    #[test]
+    fn should_do_part_a() {
+        assert_eq!(part_a(TEST_FILE_NAME), 15);
+    }
+
+    #[test]
+    fn should_do_part_b() {
+        assert_eq!(part_b(TEST_FILE_NAME), 12);
+    }
 }
 
 pub fn exec() {

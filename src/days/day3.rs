@@ -1,5 +1,3 @@
-#![allow(dead_code)]
-
 use std::fs::read_to_string;
 
 // Converts character to a priority value:
@@ -56,16 +54,28 @@ pub fn exec() {
     println!("Part B: {}", part_b(filename));
 }
 
-#[test]
-fn test() {
-    let filename = "test/day3.txt";
-    assert_eq!(char_to_priority('A'), 27);
+#[cfg(test)]
+mod tests {
+    use super::*;
+    static TEST_FILE_NAME: &str = "test/day3.txt";
 
-    let part_a_sol = part_a(filename);
-    assert_eq!(part_a_sol, 157);
+    #[test]
+    fn should_convert_upper_character_to_priority() {
+        assert_eq!(char_to_priority('A'), 27);
+    }
 
-    let part_b_sol = part_b(filename);
-    assert_eq!(part_b_sol, 70);
+    #[test]
+    fn should_convert_lower_character_to_priority() {
+        assert_eq!(char_to_priority('c'), 3);
+    }
 
-    println!("Test passed");
+    #[test]
+    fn should_do_part_a() {
+        assert_eq!(part_a(TEST_FILE_NAME), 157);
+    }
+
+    #[test]
+    fn should_do_part_b() {
+        assert_eq!(part_b(TEST_FILE_NAME), 70);
+    }
 }

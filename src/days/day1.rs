@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use std::fs::read_to_string;
 
 fn parse_input(filename: &str) -> Vec<i32> {
@@ -29,12 +28,22 @@ fn part_b(mut elves: Vec<i32>) -> i32 {
     return elves[0] + elves[1] + elves[2];
 }
 
-#[test]
-pub fn test() {
-    let elves = parse_input("./test/day1.txt");
-    assert!(part_a(elves.clone()) == 24000);
-    assert!(part_b(elves.clone()) == 45000);
-    println!("Test passed")
+#[cfg(test)]
+mod tests {
+    use super::*;
+    static TEST_FILE_NAME: &str = "test/day1.txt";
+
+    #[test]
+    fn should_do_part_a() {
+        let elves = parse_input(TEST_FILE_NAME);
+        assert_eq!(part_a(elves), 24000);
+    }
+
+    #[test]
+    fn should_do_part_b() {
+        let elves = parse_input(TEST_FILE_NAME);
+        assert_eq!(part_b(elves), 45000);
+    }
 }
 
 pub fn exec() {
