@@ -15,3 +15,8 @@ pub fn output_results(a: i32, b: i32) {
     println!(" - Part A: {}", a);
     println!(" - Part B: {}", b);
 }
+
+pub fn output_results_str(a: String, b: String) {
+    println!(" - Part A: {}", a);
+    println!(" - Part B: {}", b);
+}

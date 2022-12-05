@@ -4,6 +4,7 @@ pub mod day1;
 pub mod day2;
 pub mod day3;
 pub mod day4;
+pub mod day5;
 
 pub fn run_day(day: i32) {
     println!("Day {}", day);
@@ -13,13 +14,14 @@ pub fn run_day(day: i32) {
         2 => day2::exec(),
         3 => day3::exec(),
         4 => day4::exec(),
+        5 => day5::exec(),
         _ => println!("No such day")
     }
     println!(" - Executed in {}ms", (now.elapsed().as_millis()));
 }
 
 pub fn run_all() {
-    for i in 1..5 {
+    for i in 1..6 {
         run_day(i);
         println!("");
     }
