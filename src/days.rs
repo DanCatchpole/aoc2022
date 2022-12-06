@@ -19,7 +19,7 @@ pub fn run_day(day: i32) {
         6 => day6::exec(),
         _ => println!("No such day")
     }
-    println!(" - Executed in {}ms", (now.elapsed().as_millis()));
+    println!(" - Executed in {}μs", (now.elapsed().as_micros()));
 }
 
 pub fn run_all() {
